@@ -21,9 +21,9 @@ spring:
       username: ${bi.datasource.username}
       password: ${bi.datasource.password}
   redis:
-    host: 192.168.232.135
-    port: 6379
-    password: dcy64012345
+    host:
+    port:
+    password:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
