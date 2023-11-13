@@ -20,6 +20,10 @@ spring:
       url: jdbc:mysql://${bi.datasource.host}:${bi.datasource.port}/${bi.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${bi.datasource.username}
       password: ${bi.datasource.password}
+  redis:
+    host: 192.168.232.135
+    port: 6379
+    password: dcy64012345
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
