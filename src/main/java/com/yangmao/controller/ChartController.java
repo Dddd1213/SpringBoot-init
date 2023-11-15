@@ -6,16 +6,21 @@ import com.yangmao.common.exception.BusinessException;
 import com.yangmao.common.result.Result;
 import com.yangmao.common.utils.ResultUtils;
 import com.yangmao.pojo.DTO.chart.AddChartDTO;
+import com.yangmao.pojo.DTO.chart.GenChartByAiDTO;
 import com.yangmao.pojo.DTO.chart.QueryChartDTO;
 import com.yangmao.pojo.DTO.common.DeleteDTO;
 import com.yangmao.pojo.VO.chart.AddChartVO;
 import com.yangmao.pojo.entity.Chart;
 import com.yangmao.service.ChartService;
+import com.yangmao.utils.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/chart")
@@ -74,5 +79,28 @@ public class ChartController {
         return ResultUtils.success(chartPage);
     }
 
+    /**
+     * 读取excel文件，转成csv返回string
+     * @param multipartFile
+     * @param genChartByAiDTO
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    @PostMapping("/gen")
+    public Result<String> genChartByAi(@RequestPart("file") MultipartFile multipartFile,
+                                       GenChartByAiDTO genChartByAiDTO, HttpServletRequest request) throws IOException {
+        String name = genChartByAiDTO.getName();
+        String goal = genChartByAiDTO.getGoal();
+        String chartType = genChartByAiDTO.getChartType();
+
+        if (StringUtils.isAnyBlank(goal)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "目标为空");
+        }
+
+        String result = ExcelUtils.excelToCsv(multipartFile);
+
+        return ResultUtils.success(result);
+    }
 
 }
