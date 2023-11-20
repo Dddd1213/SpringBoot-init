@@ -6,3 +6,15 @@ yangmao:
     database:
     username:
     password:
+  redis:
+    database:
+    host:
+    password:
+    port:
+    timeout:
+  rabbitmq:
+    host:
+    port:
+    virtual-host:
+    username:
+    password:
